@@ -25,16 +25,26 @@ class Global(STPyV8.JSClass):
 
     def load_module(self, name, current_dir):
         current_dir = current_dir or os.curdir
-        path = pathlib.Path(current_dir, name)
-        if path.is_file():
-            resolved_path = path.resolve()
-        elif path.is_dir():
-            resolved_path = pathlib.Path(path.resolve(), "index.js").resolve()
+        if pathlib.Path(current_dir, name).is_file():
+            resolved_path = pathlib.Path(current_dir, name).resolve()
+        elif pathlib.Path(current_dir, f"{name}.js").is_file():
+            resolved_path = pathlib.Path(current_dir, f"{name}.js").resolve()
+        elif pathlib.Path(current_dir, f"{name}.node").is_file():
+            resolved_path = pathlib.Path(current_dir, f"{name}.node").resolve()
+        elif pathlib.Path(current_dir, f"{name}.node.js").is_file():
+            resolved_path = pathlib.Path(current_dir, f"{name}.node.js").resolve()
+        elif pathlib.Path(current_dir, name, "index.js").is_file():
+            resolved_path = pathlib.Path(current_dir, name, "index.js")
+        elif pathlib.Path(current_dir, "node_modules").is_dir():
+            return self.load_module(name, str(pathlib.Path(current_dir, "node_modules").resolve()))
+        elif pathlib.Path("./node_modules", f"{name}.js").is_file():
+            resolved_path = pathlib.Path("./node_modules", f"{name}.js").resolve()
+        elif pathlib.Path("./node_modules", name).is_dir():
+            return self.load_module(name, str(pathlib.Path("./node_modules").resolve()))
         else:
-            resolved_path = self.__resolve_module_dir("./node_modules", name)
-            if not resolved_path or not pathlib.Path(resolved_path).exists():
-                raise RuntimeError(f"module {name} not found")
-
+            print(current_dir, pathlib.Path(os.curdir).resolve())
+            print(pathlib.Path("./node_modules", name).resolve())
+            raise RuntimeError(f"module {name} not found")
         return load(resolved_path)
 
     def __resolve_module_dir(self, parent_dir, name):

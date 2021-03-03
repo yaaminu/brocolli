@@ -6,15 +6,15 @@ class App extends react.Component {
     constructor(props){
       super(props)
       this.props = props
-      setState({
+      this.state = {
         name:"Brocolli"
-      })
+      }
     }
 
     render(){
-        return "<h1>Hello {this.props.name}</h1>"
+        return `<h1>Hello world ${this.state.name}</h1>`
     }
 }
 
-lib.test()
+console.log(react_dom.renderToString(react.createElement(App)))
 
