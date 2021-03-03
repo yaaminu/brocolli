@@ -24,6 +24,14 @@ class Global(STPyV8.JSClass):
     process = NodeProcessShim()
 
     def load_module(self, name, current_dir):
+        """
+        Given a module name, resolve it on the file system. Note that the module resolution used here
+        does not follow the node.js convention, it's a quick and dirty solution designed to work in most cases.
+
+        :param name:
+        :param current_dir:
+        :return:
+        """
         current_dir = current_dir or os.curdir
         if pathlib.Path(current_dir, name).is_file():
             resolved_path = pathlib.Path(current_dir, name).resolve()
@@ -39,32 +47,11 @@ class Global(STPyV8.JSClass):
             return self.load_module(name, str(pathlib.Path(current_dir, "node_modules").resolve()))
         elif pathlib.Path("./node_modules", f"{name}.js").is_file():
             resolved_path = pathlib.Path("./node_modules", f"{name}.js").resolve()
-        elif pathlib.Path("./node_modules", name).is_dir():
+        elif pathlib.Path("./node_modules").is_dir():
             return self.load_module(name, str(pathlib.Path("./node_modules").resolve()))
         else:
-            print(current_dir, pathlib.Path(os.curdir).resolve())
-            print(pathlib.Path("./node_modules", name).resolve())
             raise RuntimeError(f"module {name} not found")
         return load(resolved_path)
-
-    def __resolve_module_dir(self, parent_dir, name):
-        if pathlib.Path(parent_dir, name).is_file():
-            path = pathlib.Path(parent_dir, name)
-            return path.resolve()
-        elif pathlib.Path(parent_dir, f"{name}.js").is_file():
-            return pathlib.Path(parent_dir, f"{name}.js").resolve()
-        elif pathlib.Path(parent_dir, f"{name}.node.js").is_file():
-            return pathlib.Path(parent_dir, f"{name}.node.js").resolve()
-        elif pathlib.Path(parent_dir, name).is_dir():
-            path = pathlib.Path(parent_dir, name)
-            if pathlib.Path(path.resolve(), name).exists():
-                return pathlib.Path(path.resolve(), name)
-            elif pathlib.Path(path.resolve(), "index.js").exists():
-                return pathlib.Path(path.resolve(), "index.js").resolve()
-            else:
-                return self.__resolve_module_dir(pathlib.Path(parent_dir, name, "node_modules").resolve(), name)
-        else:
-            return None
 
 
 def load(path):
