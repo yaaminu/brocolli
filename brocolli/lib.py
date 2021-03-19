@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 
 import STPyV8
 
@@ -13,3 +14,5 @@ def render_app(app_path: Path):
         rendered_app = ctx.eval(bootstrap["code"])
     return rendered_app
 
+def python_version():
+    return sys.version

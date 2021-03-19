@@ -1,10 +1,12 @@
 const react = require("react")
+const sys = load_python_module('sys')
 
 class Button extends react.Component{
     render(){
         return <input type="button" value="hello"></input>
     }
 }
+
 class App extends react.Component {
     constructor(props){
       super(props)
@@ -23,6 +25,7 @@ class App extends react.Component {
         <div>
              <h1>Hello world {this.state.name}</h1>
              <p>{`${year}-${month}-${day}`}</p>
+             <p>{`Python Version ${sys.version}`</p>
              <Button/>
         </div>
         )

@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 var react = require("react");
+var sys = load_python_module('sys');
 var Button = /** @class */ (function (_super) {
     __extends(Button, _super);
     function Button() {
@@ -44,6 +45,7 @@ var App = /** @class */ (function (_super) {
                 "Hello world ",
                 this.state.name),
             React.createElement("p", null, year + "-" + month + "-" + day),
+            React.createElement("p", null, "Python Version " + sys.version),
             React.createElement(Button, null)));
     };
     return App;
