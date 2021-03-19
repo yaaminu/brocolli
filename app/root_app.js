@@ -1,5 +1,6 @@
 const react = require("react")
 const sys = load_python_module('sys')
+const lib = load_python_module('brocolli.lib')
 
 class Button extends react.Component{
     render(){
@@ -17,14 +18,11 @@ class App extends react.Component {
     }
 
     render(){
-        let python_date = python.date_time()
-        let day = python_date.day
-        let month = python_date.month
-        let year = python_date.year
+        let today = lib.Date()
         return (
         <div>
              <h1>Hello world {this.state.name}</h1>
-             <p>{`${year}-${month}-${day}`}</p>
+             <p>{`${today.year}-${today.month}-${today.day}`}</p>
              <p>{`Python Version ${sys.version}`</p>
              <Button/>
         </div>

@@ -15,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var react = require("react");
 var sys = load_python_module('sys');
+var lib = load_python_module('brocolli.lib');
 var Button = /** @class */ (function (_super) {
     __extends(Button, _super);
     function Button() {
@@ -36,15 +37,12 @@ var App = /** @class */ (function (_super) {
         return _this;
     }
     App.prototype.render = function () {
-        var python_date = python.date_time();
-        var day = python_date.day;
-        var month = python_date.month;
-        var year = python_date.year;
+        var today = lib.Date();
         return (React.createElement("div", null,
             React.createElement("h1", null,
                 "Hello world ",
                 this.state.name),
-            React.createElement("p", null, year + "-" + month + "-" + day),
+            React.createElement("p", null, today.year + "-" + today.month + "-" + today.day),
             React.createElement("p", null, "Python Version " + sys.version),
             React.createElement(Button, null)));
     };

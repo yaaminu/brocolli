@@ -4,10 +4,8 @@
     <list default="true" id="c38b1a9a-0b20-4acf-b1b1-fb251dbd8abf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/root_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/root_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brocolli/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/brocolli/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/brocolli/lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/brocolli/lib.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/root_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/root_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

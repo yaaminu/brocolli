@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 import sys
 
@@ -14,5 +15,14 @@ def render_app(app_path: Path):
         rendered_app = ctx.eval(bootstrap["code"])
     return rendered_app
 
+
 def python_version():
     return sys.version
+
+
+class Date:
+    def __init__(self):
+        self._date = datetime.datetime.today()
+
+    def __getattr__(self, key):
+        return getattr(self._date, key)
