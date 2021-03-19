@@ -1,5 +1,5 @@
 function custom_require(path){
-    let script = load_module(path, custom_require.dirname)
+    let script = load_js_module(path, custom_require.dirname)
     let module = {}
     let exports = {}
     module.exports = exports

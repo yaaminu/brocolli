@@ -39,7 +39,6 @@ var App = /** @class */ (function (_super) {
         var day = python_date.day;
         var month = python_date.month;
         var year = python_date.year;
-        console.log(global.version);
         return (React.createElement("div", null,
             React.createElement("h1", null,
                 "Hello world ",

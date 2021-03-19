@@ -1,7 +1,13 @@
 from pathlib import Path
 import os
+import importlib
 
-def do_load_module(name, current_dir):
+
+def load_python_module(module: str):
+    return importlib.import_module(module)
+
+
+def do_load_js_module(name, current_dir):
     current_dir = current_dir or os.curdir
     resolved_path = None
     if Path(current_dir, name).is_file():
@@ -22,17 +28,17 @@ def do_load_module(name, current_dir):
     if resolved_path is None:
         if not __are_same_dir(current_dir, os.curdir):
             if Path(Path(current_dir).parent).is_dir():
-                return do_load_module(name, str(Path(current_dir).parent))
+                return do_load_js_module(name, str(Path(current_dir).parent))
         else:
             raise RuntimeError(f"module {name} not found")
-    return load(resolved_path)
+    return load_javascript_file(resolved_path)
 
 
 def __are_same_dir(first, second):
     return Path(first).resolve() == Path(second).resolve()
 
 
-def load(path):
+def load_javascript_file(path):
     path = Path(path)
     return {
         "file_name": path.resolve(),

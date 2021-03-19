@@ -19,7 +19,6 @@ class App extends react.Component {
         let day = python_date.day
         let month = python_date.month
         let year = python_date.year
-        console.log(global.version)
         return (
         <div>
              <h1>Hello world {this.state.name}</h1>
