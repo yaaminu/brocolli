@@ -6,6 +6,7 @@ function custom_require(path){
     ;(function do_require(exports, require, module, __filename, __dirname){
         require.dirname = __dirname
         eval(script.code)
+        require.dirname = ""
     })(exports, require, module, script.file_name, script.parent_dir)
 
     return module.exports
