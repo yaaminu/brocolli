@@ -1,13 +1,16 @@
 function custom_require(path){
-    let script = load_js_module(path, custom_require.dirname)
+    custom_require.stack = custom_require.stack || []
+    top_dir = custom_require.stack[custom_require.stack.length -1]
+    let script = load_js_module(path, top_dir)
+    custom_require.stack.push(script.parent_dir)
     let module = {}
     let exports = {}
     module.exports = exports
     ;(function do_require(exports, require, module, __filename, __dirname){
-        require.dirname = __dirname
         eval(script.code)
-        require.dirname = ""
-    })(exports, require, module, script.file_name, script.parent_dir)
-
+        module.exports["default"] = module.exports
+        require.stack.pop()
+    })(exports, custom_require, module, script.file_name, script.parent_dir)
     return module.exports
 }
+

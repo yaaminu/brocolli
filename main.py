@@ -1,18 +1,26 @@
-import sys
 import os
 from pathlib import Path
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
 import brocolli
 
-if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        raise RuntimeError("Usage: python3 main.py {app_path}")
-    app_path = Path(os.curdir, sys.argv[1]).resolve()
-    rendered_app = brocolli.render_app(app_path)
-    print(f"""
+app = FastAPI()
+react_renderer = brocolli.create_renderer(type='react')
+
+
+@app.get("/")
+async def root():
+    app_path = Path(os.curdir, "build/sample_app.js").resolve()
+    css = Path('./index.css').read_text("utf-8")
+    rendered_app = react_renderer.render_app(app_path)
+    content = f"""
     <html>
-        <body>
-          {rendered_app}
-        </body>
-    </html> 
-    """)
+        <head>
+            <style>
+                {css}
+            </style> 
+        </head>
+        <body> {rendered_app}  </body>
+    </html>"""
+    return HTMLResponse(content=content)
