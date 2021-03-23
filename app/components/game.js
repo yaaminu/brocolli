@@ -1,7 +1,8 @@
-import React from 'react'
-import Board from './board'
+const React = require('react')
+const Board = require('./board')
 
-export default class Game extends React.Component {
+
+class Game extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -86,3 +87,5 @@ export default class Game extends React.Component {
         );
     }
 }
+
+module.exports = Game

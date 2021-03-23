@@ -1,7 +1,7 @@
-import React from 'react'
-import Square from './square'
+const React = require('react')
+const Square = require('./square')
 
-export default class Board extends React.Component {
+class Board extends React.Component {
     constructor(props){
         super(props)
     }
@@ -32,3 +32,5 @@ export default class Board extends React.Component {
         );
     }
 }
+
+module.exports = Board
