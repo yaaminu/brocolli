@@ -1,6 +1,6 @@
-const React = require('react')
+import React from 'react'
 
-class Square extends React.Component {
+export default class Square extends React.Component {
     constructor(props){
         super(props)
     }
@@ -12,5 +12,3 @@ class Square extends React.Component {
             </button>)
     }
 }
-
-module.exports = Square

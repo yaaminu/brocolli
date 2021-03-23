@@ -1,9 +1,9 @@
-const React = require('react')
-const Board = require('./board')
+import React from 'react'
+import Board from './board'
 
 const sys = load_python_module('sys')
 
-class Game extends React.Component {
+export default class Game extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -90,4 +90,3 @@ class Game extends React.Component {
     }
 }
 
-module.exports = Game

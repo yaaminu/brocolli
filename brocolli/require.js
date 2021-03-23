@@ -8,6 +8,12 @@ function custom_require(path){
     module.exports = exports
     ;(function do_require(exports, require, module, __filename, __dirname){
         eval(script.code)
+        if (exports['default']){
+            module.exports = exports['default']
+            module.exports['default'] = exports['default']
+        }else{
+            module.exports['default'] = module.exports
+        }
         require.stack.pop()
     })(exports, custom_require, module, script.file_name, script.parent_dir)
     return module.exports
