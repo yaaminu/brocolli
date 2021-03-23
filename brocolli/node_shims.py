@@ -13,40 +13,18 @@ class NodeProcessShim:
     env = dict((key, val) for key, val in os.environ.items())
 
 
-class Bar:
-    def __init__(self, date):
-        self.date = date
-
-    @property
-    def month(self):
-        return self.date.month
-
-    @property
-    def year(self):
-        return self.date.year
-
-    @property
-    def day(self):
-        return self.date.day
-
-
-class Python(STPyV8.JSClass):
-    def date_time(self):
-        return Bar(datetime.datetime.today())
-
-
 class Global(STPyV8.JSClass):
     version = "1.23"
     console = NodeConsoleShim()
     process = NodeProcessShim()
 
-    def init(self, ctxt):
+    def init(self, ctxt, renderer):
         ctxt.console = self.console
         setattr(ctxt, "global", self)
         require = brocolli.load_javascript_file('./brocolli/require.js')
         ctxt.eval(require["code"])
         ctxt.require = ctxt.custom_require
-        ctxt.python = Python()
+        ctxt.render = ctxt.require(renderer)
 
     def load_python_module(self, name: str):
         return brocolli.load_python_module(name)

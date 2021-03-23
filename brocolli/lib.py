@@ -1,19 +1,41 @@
 import datetime
 from pathlib import Path
 import sys
-
+import os
 import STPyV8
 
-from .node_shims import Global
-from .loader import load_javascript_file
+from brocolli.node_shims import Global
 
 
-def render_app(app_path: Path):
-    with STPyV8.JSContext(Global()) as ctx:
-        bootstrap = load_javascript_file('./brocolli/bootstrap.js')
-        ctx.eval(f"APP_ROOT_PATH = '{app_path}'")
-        rendered_app = ctx.eval(bootstrap["code"])
-    return rendered_app
+class Renderer:
+    def __init__(self, renderer_path: str):
+        self.ctx = None
+        self.renderer_path = renderer_path
+
+    def init(self):
+        if self.ctx is not None:
+            raise RuntimeError("Attempted to initialize an already initialized renderer")
+        self.ctx = STPyV8.JSContext(Global())
+        self.ctx.__enter__()
+        self.ctx.eval(f"init(this, '{self.renderer_path}')")
+
+    def destroy(self):
+        if self.ctx is not None:
+            self.ctx.__exit__(None, None, None)
+            self.ctx = None
+
+    def render_app(self, app_path: Path):
+        if self.ctx is None:
+            raise RuntimeError("Attempted to use an uninitialized renderer")
+        app_dir = app_path.parent.resolve()
+        rendered_app = self.ctx.eval(f"render('{app_path}', '{app_dir}')")
+        return rendered_app
+
+
+class ReactRenderer(Renderer):
+    def __init__(self):
+        renderer_path = Path(os.path.dirname(__file__), "react_renderer.js").resolve()
+        super(ReactRenderer, self).__init__(renderer_path)
 
 
 def python_version():
@@ -26,3 +48,12 @@ class Date:
 
     def __getattr__(self, key):
         return getattr(self._date, key)
+
+
+def create_renderer(type: str) -> Renderer:
+    if type == "react":
+        renderer = ReactRenderer()
+        renderer.init()
+    else:
+        raise RuntimeError(f"Unknown renderer type {type}")
+    return renderer

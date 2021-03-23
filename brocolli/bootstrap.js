@@ -1,4 +1,2 @@
-
-init(this)
-const render = require('./brocolli/react_renderer.js')
-render(APP_ROOT_PATH)
+init(this, global.RENDERER)
+rendered_app = render(global.APP_ROOT_PATH)
