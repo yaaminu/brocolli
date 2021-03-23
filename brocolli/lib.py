@@ -49,6 +49,9 @@ class Date:
     def __getattr__(self, key):
         return getattr(self._date, key)
 
+    def __str__(self):
+        return str(self._date)
+
 
 def create_renderer(type: str) -> Renderer:
     if type == "react":

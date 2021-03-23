@@ -14,8 +14,12 @@ class App extends React.Component {
     }
 
     render(){
+        let date = new lib.Date()
         return (
+           <div>
+            <p>Rendered with python {sys.version} on {date.strftime("%Y/%m/%d %H:%M:%S")}</p>
             <Game/>
+           </div>
         )
     }
 }

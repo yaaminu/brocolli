@@ -1,6 +1,7 @@
 const React = require('react')
 const Board = require('./board')
 
+const sys = load_python_module('sys')
 
 class Game extends React.Component {
     constructor(props) {
@@ -83,6 +84,7 @@ class Game extends React.Component {
                     <div>{status}</div>
                     <ol>{moves}</ol>
                 </div>
+                <p>{sys.version}</p>
             </div>
         );
     }
