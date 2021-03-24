@@ -1,4 +1,4 @@
-const SERVER_OBJECT = new Proxy({}, {
+const SERVER_OBJECT = new Proxy(new Function("return new Proxy({},{})"), {
     get: function(target, prop, receiver){
         return SERVER_OBJECT
     }
@@ -36,6 +36,7 @@ exports.create_state = function(component_id, state){
         }
     }
     if(typeof global !== 'undefined'){
+        global.___brocolli___ = global.___brocolli___ || {___state___:{}}
         global.___brocolli___.___state___[component_id] = state
     }
     return state
