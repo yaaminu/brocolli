@@ -1,20 +1,20 @@
 import React from 'react'
 import Board from './board'
-import {load_python_module} from '../brocolli'
+import {load_python_module, create_state} from '../brocolli'
 
 const version = load_python_module('sys').version
 
 export default class Game extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
+        this.state = create_state('/src/components/game.js', {
             history: [{
                 squares: Array(9).fill(null)
             }],
             stepNumber: 0,
             xIsNext: true,
             version: version
-        }
+        })
     }
 
     calculateWinner(squares) {
@@ -83,7 +83,7 @@ export default class Game extends React.Component {
                     <Board squares={current.squares} onClick={(i) => this.handleClick(i)} />
                 </div>
                 <div className="game-info">
-                    <div>{this.version}</div>
+                    <div>{this.state.version}</div>
                     <div>{status}</div>
                     <ol>{moves}</ol>
                 </div>

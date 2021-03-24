@@ -9,6 +9,9 @@ module.exports = function render(app_module, app_dir){
     }else{
         App = module
     }
-    return react_dom.renderToString(react.createElement(App))
+    return {
+        "markup": react_dom.renderToString(react.createElement(App)),
+        "state":JSON.stringify(global.___brocolli___.___state___)
+     }
 }
 
