@@ -28,8 +28,7 @@ class Renderer:
         if self.ctx is None:
             raise RuntimeError("Attempted to use an uninitialized renderer")
         app_dir = app_path.parent.resolve()
-        rendered_app = self.ctx.eval(f"render('{app_path}', '{app_dir}')")
-        return rendered_app
+        return self.ctx.eval(f"render('{app_path}', '{app_dir}')")
 
 
 class ReactRenderer(Renderer):
@@ -48,6 +47,9 @@ class Date:
 
     def __getattr__(self, key):
         return getattr(self._date, key)
+
+    def __str__(self):
+        return str(self._date)
 
 
 def create_renderer(type: str) -> Renderer:
