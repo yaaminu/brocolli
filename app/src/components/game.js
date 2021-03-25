@@ -5,6 +5,8 @@ import {load_python_module, create_state} from '../brocolli'
 const version = load_python_module('sys').version
 const date = load_python_module('brocolli.lib').Date
 const uname = load_python_module('os').uname().machine
+const app = load_python_module('app.app')
+
 
 export default class Game extends React.Component {
     constructor(props) {
@@ -17,9 +19,11 @@ export default class Game extends React.Component {
             xIsNext: true,
             version: version,
             uname: uname,
-            today: date().strftime("%Y-%m-%d")
+            today: date().strftime("%Y-%m-%d"),
+            test: app.Bar().test()
         })
     }
+
 
     calculateWinner(squares) {
         const lines = [
@@ -89,7 +93,7 @@ export default class Game extends React.Component {
                 <div className="game-info">
                     <div>uname {this.state.uname} {this.state.today}</div>
                     <div>{this.state.version}</div>
-                    <div>{status}</div>
+                    <div>{status} {this.state.test}</div>
                     <ol>{moves}</ol>
                 </div>
             </div>
