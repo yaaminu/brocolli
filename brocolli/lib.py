@@ -27,8 +27,7 @@ class Renderer:
     def render_app(self, app_path: Path):
         if self.ctx is None:
             raise RuntimeError("Attempted to use an uninitialized renderer")
-        app_dir = app_path.parent.resolve()
-        return self.ctx.eval(f"render('{app_path}', '{app_dir}')")
+        return self.ctx.eval(f"render('{app_path}')")
 
 
 class ReactRenderer(Renderer):
