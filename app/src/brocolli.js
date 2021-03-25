@@ -1,12 +1,11 @@
-const SERVER_OBJECT = new Proxy(new Function("return new Proxy({},{})"), {
-    get: function(target, prop, receiver){
-        return SERVER_OBJECT
-    }
+
+const SERVER_OBJECT = new Proxy(function(){return SERVER_OBJECT}, {
+    get: ()=> SERVER_OBJECT
 })
 
 exports.load_python_module =  function(module){
     let load_python_module
-    if (typeof global !== 'undefined' && global.load_python_module){
+    if (typeof global !== 'undefined'){
          load_python_module = global.load_python_module
     } else {
          let proxy = {
@@ -22,8 +21,8 @@ exports.load_python_module =  function(module){
 
 exports.restore_component_states = function(){
     if(typeof window !== 'undefined' && window.___brocolli___ === undefined){
-        let state = document.getElementById('app_state').childNodes[0].data
-        window.___brocolli___ = {___state___:JSON.parse(state)}
+        let states = JSON.parse(document.getElementById('app_state').childNodes[0].data)
+        window.___brocolli___ = {___state___:states}
     }
 }
 
