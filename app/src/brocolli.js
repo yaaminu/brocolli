@@ -5,7 +5,7 @@ const SERVER_OBJECT = new Proxy(function(){return SERVER_OBJECT}, {
 
 exports.load_python_module =  function(module){
     let load_python_module
-    if (typeof global !== 'undefined'){
+    if (typeof global !== 'undefined' && global.load_python_module !== undefined){
          load_python_module = global.load_python_module
     } else {
          let proxy = {
