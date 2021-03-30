@@ -21,7 +21,7 @@ class Global(STPyV8.JSClass):
     def init(self, ctxt, renderer):
         ctxt.console = self.console
         setattr(ctxt, "global", self)
-        require = brocolli.load_javascript_file('./brocolli/require.js')
+        require = brocolli.load_javascript_file('./brocolli/js/require.js')
         ctxt.eval(require["code"])
         ctxt.require = ctxt.custom_require
         ctxt.render = ctxt.require(renderer)

@@ -2,5 +2,4 @@ __pycache__/
 build/
 .idea/
 static/
-node_modules/
-!node_modules/stream.js
+node_modules
