@@ -18,9 +18,6 @@ class Global(STPyV8.JSClass):
     console = NodeConsoleShim()
     process = NodeProcessShim()
 
-    def __init__(self):
-        self.app_state = dict(___brocolli___=dict(___state___={}))
-
     def init(self, ctxt, renderer):
         ctxt.console = self.console
         setattr(ctxt, "global", self)
@@ -28,6 +25,7 @@ class Global(STPyV8.JSClass):
         ctxt.eval(require["code"])
         ctxt.require = ctxt.custom_require
         ctxt.render = ctxt.require(renderer)
+        ctxt.eval("global.app_state = {___brocolli___:{___state___:{}}}")
 
     def load_python_module(self, name: str):
         return brocolli.load_python_module(name)

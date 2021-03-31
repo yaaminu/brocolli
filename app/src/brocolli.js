@@ -4,16 +4,16 @@ const SERVER_OBJECT = new Proxy(function(){return SERVER_OBJECT}, {
 })
 
 exports.load_python_module =  function(module){
-    if (typeof global !== 'undefined' && global.load_python_module !== undefined){
-         return global.load_python_module(module)
-    }
-    let proxy = {
-        get: function(target, prop, receiver){
-            console.log("Attempted to access python module in a browser environment " + prop)
-            return SERVER_OBJECT
+    if (typeof window !== 'undefined'){
+        let proxy = {
+            get: function(target, prop, receiver){
+                console.log("Attempted to access python module in a browser environment " + prop)
+                return SERVER_OBJECT
+            }
         }
+        return new Proxy({}, proxy)
     }
-    return new Proxy({}, proxy)
+    return global.load_python_module(module)
 }
 
 exports.restore_component_states = function(){
@@ -33,9 +33,7 @@ exports.create_state = function(component_id, state){
                 state[key] = component_state[key]
              }
         }
-
-    }
-    if(typeof global !== 'undefined'){
+    } else {
         global.app_state[component_id] = state
     }
     return state

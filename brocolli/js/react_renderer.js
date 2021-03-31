@@ -8,7 +8,7 @@ module.exports = function render(app_module){
     let app_state = JSON.stringify(global.app_state)
     return {
         "markup": `<div id='root'>${app_markup}</div>
-        <div id='data_brocolli_app_state'><!--${app_state}--></div>
+        <div id='data_brocolli_app_state' style='display:none'><!--${app_state}--></div>
         `
      }
 }
