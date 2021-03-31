@@ -18,6 +18,9 @@ class Global(STPyV8.JSClass):
     console = NodeConsoleShim()
     process = NodeProcessShim()
 
+    def __init__(self):
+        self.app_state = dict(___brocolli___=dict(___state___={}))
+
     def init(self, ctxt, renderer):
         ctxt.console = self.console
         setattr(ctxt, "global", self)
