@@ -24,10 +24,12 @@ class Renderer:
             self.ctx.__exit__(None, None, None)
             self.ctx = None
 
-    def render_app(self, app_path: Path):
+    def render_app(self, app_path: Path, data: dict):
         if self.ctx is None:
             raise RuntimeError("Attempted to use an uninitialized renderer")
-        return self.ctx.eval(f"render('{app_path}')")
+        return self.ctx.eval(f"""
+        render('{app_path}', JSON.parse(JSON.stringify({data})))
+""")
 
 
 class ReactRenderer(Renderer):

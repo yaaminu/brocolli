@@ -4,7 +4,6 @@ import Game from './components/game'
 export default class App extends React.Component {
     constructor(props){
       super(props)
-      this.props = props
       this.state = {
         name:"Brocolli"
       }
@@ -12,7 +11,10 @@ export default class App extends React.Component {
 
     render(){
         return (
-            <Game/>
+            <div>
+               <p>{this.props["Hello"]}</p>
+                <Game/>
+            </div>
         )
     }
 }

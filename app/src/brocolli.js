@@ -19,24 +19,34 @@ exports.load_python_module =  function(module){
     return load_python_module(module)
 }
 
-exports.restore_component_states = function(){
+exports.initialize = function initialize(){
     if(typeof window !== 'undefined' && window.___brocolli___ === undefined){
-        let states = JSON.parse(document.getElementById('app_state').childNodes[0].data)
-        window.___brocolli___ = {___state___:states}
+        let state = document.getElementById('app_state').childNodes[0].data
+        console.log(state)
+        let states = JSON.parse(state)
+        let props = JSON.parse(document.getElementById('app_prop').childNodes[0].data)
+        window.___brocolli___ = {state:states, props: props}
     }
+}
+
+exports.main_props = function main_props(){
+    if(window.___brocolli___ !== undefined){
+        return window.___brocolli___.props
+    }
+    throw new Error("Brocolli is not initialized!!")
 }
 
 exports.create_state = function(component_id, state){
     let keys = Object.keys(state)
     for (let key of keys){
         if(state[key] === SERVER_OBJECT ){
-            let component_state = window.___brocolli___.___state___[component_id]
+            let component_state = window.___brocolli___.state[component_id]
             state[key] = component_state[key]
         }
     }
     if(typeof global !== 'undefined'){
-        global.___brocolli___ = global.___brocolli___ || {___state___:{}}
-        global.___brocolli___.___state___[component_id] = state
+        global.___brocolli___ = global.___brocolli___ || {state:{}}
+        global.___brocolli___.state[component_id] = state
     }
     return state
 }
