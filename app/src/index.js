@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Game from './components/game'
+import App from './sample_app'
 import './index.css';
-import {restore_component_states} from './brocolli'
+import {initialize, main_props} from './brocolli'
 
 
-restore_component_states()
+console.log('hello hello world')
+initialize()
+console.log('hello world')
 ReactDOM.hydrate(
-  <Game />,
-  document.getElementById('root')
+   React.createElement(App, main_props()),
+   document.getElementById('root')
 );
