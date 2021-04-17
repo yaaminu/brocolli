@@ -27,9 +27,7 @@ class Renderer:
     def render_app(self, app_path: Path, data: dict):
         if self.ctx is None:
             raise RuntimeError("Attempted to use an uninitialized renderer")
-        return self.ctx.eval(f"""
-        render('{app_path}', JSON.parse(JSON.stringify({data})))
-""")
+        return self.ctx.eval(f"render('{app_path}', JSON.parse(JSON.stringify({data})))")
 
 
 class ReactRenderer(Renderer):

@@ -30,6 +30,8 @@ def do_resolve_js_module_path(name, current_dir):
         if not __are_same_dir(current_dir, os.curdir):
             if Path(Path(current_dir).parent).is_dir():
                 return do_resolve_js_module_path(name, str(Path(current_dir).parent))
+        elif Path("brocolli", "js", f"{name}.js").is_file():  # look into brocolli/js as our last resort
+            return Path("brocolli", "js", f"{name}.js")
     return resolved_path
 
 
