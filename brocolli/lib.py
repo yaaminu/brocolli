@@ -34,7 +34,7 @@ class Renderer:
 
 class ReactRenderer(Renderer):
     def __init__(self):
-        renderer_path = Path(os.path.dirname(__file__), "react_renderer.js").resolve()
+        renderer_path = Path(os.path.dirname(__file__), "js", "react_renderer.js").resolve()
         super(ReactRenderer, self).__init__(renderer_path)
 
 
