@@ -7,17 +7,18 @@ from fastapi.staticfiles import StaticFiles
 import brocolli
 
 app = FastAPI()
-react_renderer = brocolli.create_renderer(type='react')
+app_path = Path(os.curdir, "build/sample_app.js").resolve()
+app_node_modules = Path(os.curdir, "example_app/node_modules").resolve()
+react_renderer = brocolli.create_renderer('react', app_path, app_node_modules)
 
-app.mount("/static", StaticFiles(directory="./app/build/static"), name="static")
+app.mount("/static", StaticFiles(directory="./example_app/build/static"), name="static")
 
 
 @app.get("/")
 async def root():
-    app_path = Path(os.curdir, "build/sample_app.js").resolve()
-    html = Path('./app/build/index.html').read_text("utf-8")
+    html = Path('./example_app/build/index.html').read_text("utf-8")
     data = {"Hello": "world"}
-    rendered_app = react_renderer.render_app(app_path, data)
+    rendered_app = react_renderer.render_app(data)
     content = html.replace(
         '<div id="root"></div>',
         f"<div id='app_state' style='display:none'><!--{rendered_app['state']}--></div>"

@@ -5,7 +5,7 @@ import {load_python_module, create_state} from '../brocolli'
 const version = load_python_module('sys').version
 const date = load_python_module('brocolli.lib').Date
 const uname = load_python_module('os').uname().machine
-const app = load_python_module('app.app')
+const app = load_python_module('example_app.app')
 
 
 export default class Game extends React.Component {
