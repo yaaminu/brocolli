@@ -18,6 +18,10 @@ class Global(STPyV8.JSClass):
     console = NodeConsoleShim()
     process = NodeProcessShim()
 
+    def __init__(self, app_node_modules):
+        self.app_node_modules = app_node_modules
+        super(Global, self).__init__()
+
     def init(self, ctxt, renderer):
         ctxt.console = self.console
         setattr(ctxt, "global", self)
@@ -38,4 +42,4 @@ class Global(STPyV8.JSClass):
         :param current_dir:
         :return:
         """
-        return brocolli.do_load_js_module(name, current_dir)
+        return brocolli.do_load_js_module(name, current_dir, self.app_node_modules)
